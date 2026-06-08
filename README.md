@@ -3,7 +3,7 @@ Este repositório foi produzido como parte da atividade extensionista *AEX-EACH-
 
 ## Objetivo
 
-Durante o desenvolvimento de uma aplicação complexa e extensa diversas tarefas precisam ser executadas de maneira repetida e rapidamente, como:
+Durante o desenvolvimento de uma aplicação complexa e extensa diversas tarefas precisam ser executadas de maneira repetida e rapida, como:
 
 - Compilação de código-fonte;
 - Gerenciamento de depências;
@@ -43,8 +43,8 @@ Este material foi desenvolvido para:
 
 A depender do conteúdo estudado, é recomendado que já exista familiaridade com:
 
-- [Java]();
-- [C/C++]();
+- [Java](https://github.com/AEX-EACH-00060-01-Dev-sistemas/linguagem-de-programacao);
+- [C/C++](https://github.com/AEX-EACH-00060-01-Dev-sistemas/linguagem-de-programacao);
 - Alguma [IDE]();
 
 Caso não se sinta confiante em algo e/ou gostaria de revisar algum conteúdo, basta clicar em algum dos hiperlinks acima que será direcionado a outra página produzida pela atividade extensionista. Caso você tenha interesse em algum outro assunto não listado acima, verifique a página da atividade extensionista no github clicando [aqui](https://github.com/AEX-EACH-00060-01-Dev-sistemas).
