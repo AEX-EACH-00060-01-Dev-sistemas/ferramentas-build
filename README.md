@@ -11,14 +11,14 @@ Durante o desenvolvimento de uma aplicação complexa e extensa diversas tarefas
 - Geração de documentação;
 - Entre outros.
 
-Realizar todas essas tarefas de maneira manual torna o processo de desenvolvimento lento e sujeito a erros. Por isso, surgiram as ferramentas de automação de build que serão abordadas nesse repositório, as quais permitem padronizar e automatizar essas etapas. Assim, esse repositório tem como objetivo apresentar seus principais conceitos e demonstrando sua utilização na prática por meio de exemplos e tutoriais.
+Realizar todas essas tarefas de maneira manual torna o processo de desenvolvimento lento e sujeito a erros. Por isso, surgiram as ferramentas de automação de build que serão abordadas nesse repositório, as quais permitem padronizar e automatizar essas etapas. Assim, esse repositório tem como objetivo apresentar seus principais conceitos e demonstr sua utilização na prática por meio de exemplos e tutoriais.
 
 ## Conteúdos Disponíveis
 
 Entre os conteúdos abordados nesse repositório estão:
 
 - [Maven (Java)]();
-- [Makefile (C/C++)]();
+- [Makefile (C/C++)](./Maven/);
 - ...
 
 ## Youtube
