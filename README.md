@@ -3,7 +3,7 @@ Este repositório foi produzido como parte da atividade extensionista *AEX-EACH-
 
 ## Objetivo
 
-Durante o desenvolvimento de uma aplicação complexa e extensa diversas tarefas precisam ser executadas de maneira repetida e rapida, como:
+Durante o desenvolvimento de uma aplicação existem diversas tarefas que precisam ser executadas de maneira repetida e rapida, como:
 
 - Compilação de código-fonte;
 - Gerenciamento de depências;
@@ -11,7 +11,7 @@ Durante o desenvolvimento de uma aplicação complexa e extensa diversas tarefas
 - Geração de documentação;
 - Entre outros.
 
-Realizar todas essas tarefas de maneira manual torna o processo de desenvolvimento lento e sujeito a erros. Por isso, surgiram as ferramentas de automação de build que serão abordadas nesse repositório, as quais permitem padronizar e automatizar essas etapas. Assim, esse repositório tem como objetivo apresentar seus principais conceitos e demonstr sua utilização na prática por meio de exemplos e tutoriais.
+Realizar todas essas tarefas de maneira manual torna o processo de desenvolvimento lento e sujeito a erros. Por isso, surgiram as ferramentas de automação de build que serão abordadas nesse repositório, as quais permitem padronizar e automatizar essas etapas. Assim, esse repositório tem como objetivo apresentar seus principais conceitos e demonstrar sua utilização na prática por meio de exemplos e tutoriais.
 
 ## Conteúdos Disponíveis
 
