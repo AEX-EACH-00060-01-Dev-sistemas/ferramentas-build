@@ -6,8 +6,12 @@ Antes da instalação é necessário possuir o Java Development Kit (JDK) instal
 
 Verifique a instalação com os comandos:
 
-``java -version``
-``javac -version``
+```bash
+java -version
+```
+```bash
+javac -version
+```
 
 ## Instalação no Windows
 ### Passo 1: Download
@@ -27,9 +31,15 @@ Agora, nós precisamos adicionar a pasta `bin` do diretório do Maven as variáv
 - Clique em OK em todas as janelas para salvar;
 
 ### Passo 4: Verificação
-Para testar que tudo foi instalado corretamente, abra o prompt de comando e digite:
+Para testar se tudo foi instalado corretamente, abra o prompt de comando e digite:
 
-``mvn -v`` ou ``mvn -version``
+```bash
+mvn -v
+``` 
+ou 
+```bash
+mvn -version
+```
 
 Caso tudo tenha sido instalado corretamente, uma mensagem no estilo abaixo deve aparecer:
 
@@ -48,20 +58,32 @@ A instalação no MacOS está disponível através do [Homebrew](https://brew.sh
 ### Passo 1: Download
 ### Homebrew
 Digite o comando:
-``brew install maven``
+```bash
+brew install maven
+```
 
 ### SDKMAN!
 Digite o comando:
-``sdk install maven``
+```bash 
+sdk install maven
+```
 
 ### MacPorts
 Digite o comando:
-``sudo port install maven3``
+```bash
+sudo port install maven3
+```
 
 ### Passo 2: Verificação
-Para testar que tudo foi instalado corretamente, abra o prompt de comando e digite:
+Para testar se tudo foi instalado corretamente, abra o prompt de comando e digite:
 
-``mvn -v`` ou ``mvn -version``
+```bash
+mvn -v
+``` 
+ou 
+```bash
+mvn -version
+```
 
 Caso tudo tenha sido instalado corretamente, uma mensagem detalhando sobre a versão do Maven deve aparecer.
 
@@ -73,20 +95,32 @@ A instalação no Linux vária de acordo com o *packet manager* da sua distribui
 ### Passo 1: Download
 ### APT (Ubuntu/Debian)
 Digite o comando:
-``sudo apt install maven``
+```bash
+sudo apt install maven
+```
 
 ### DNF (Fedora)
 Digite o comando:
-``sudo dnf install maven``
+```bash
+sudo dnf install maven
+```
 
 ### YUM
 Digite o comando:
-``sudo yum install maven``
+```bash 
+sudo yum install maven
+```
 
 ### Passo 2: Verificação
-Para testar que tudo foi instalado corretamente, abra o prompt de comando e digite:
+Para testar se tudo foi instalado corretamente, abra o prompt de comando e digite:
 
-``mvn -v`` ou ``mvn -version``
+```bash
+mvn -v
+``` 
+ou 
+```bash
+mvn -version
+```
 
 Caso tudo tenha sido instalado corretamente, uma mensagem detalhando sobre a versão do Maven deve aparecer.
 

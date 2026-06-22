@@ -24,7 +24,7 @@ Apesar de explicarmos melhor sobre o maven nos capítulos seguintes, vamos tenta
 
 Os projetos Maven são configurados usando um Project Object Model (POM) que está descrito em um arquivo nomeado `pom.xml`. Nele, são descritos diversas informações sobre o projeto, como seu nome, versão, depêndencias, entre outros. Com ele, o Maven consegue entender tudo sobre seu projeto e executa-lo de maneira adequada. Abaixo segue um exemplo mínimo de um `pom.xml`:
 
-```
+```XML
 <project>
   <!-- model version é sempre 4.0.0 para POMs do Maven 2.x -->
   <modelVersion>4.0.0</modelVersion>
