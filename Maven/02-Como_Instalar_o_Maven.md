@@ -4,10 +4,10 @@
 
 Antes da instalação é necessário possuir o Java Development Kit (JDK) instalado.
 
-Verifique a instalação:
+Verifique a instalação com os comandos:
 
-java -version
-javac -version
+``java -version``
+``javac -version``
 
 ## Instalação no Windows
 ### Passo 1: Download
@@ -40,6 +40,8 @@ Default locale: pt_BR, platform encoding: Cp1252
 OS name: "windows 11", version: "10.0", arch: "amd64", family: "windows"
 ```
 
+---
+
 ## Instalação no macOS
 A instalação no MacOS está disponível através do [Homebrew](https://brew.sh/), [SDKMAN!](https://sdkman.io/) e [MacPorts](https://www.macports.org/).
 
@@ -53,7 +55,7 @@ Digite o comando:
 ``sdk install maven``
 
 ### MacPorts
-Digite o comando
+Digite o comando:
 ``sudo port install maven3``
 
 ### Passo 2: Verificação
@@ -62,6 +64,8 @@ Para testar que tudo foi instalado corretamente, abra o prompt de comando e digi
 ``mvn -v`` ou ``mvn -version``
 
 Caso tudo tenha sido instalado corretamente, uma mensagem detalhando sobre a versão do Maven deve aparecer.
+
+---
 
 ## Instalação no Linux
 A instalação no Linux vária de acordo com o *packet manager* da sua distribuição.
@@ -87,7 +91,7 @@ Para testar que tudo foi instalado corretamente, abra o prompt de comando e digi
 Caso tudo tenha sido instalado corretamente, uma mensagem detalhando sobre a versão do Maven deve aparecer.
 
 ## Próximos Passos
-Pronto! Agora o maven foi instalado na sua máquina e você pode prosseguir para a próxima aula do curso clicando [aqui]() ou navegando através dos nossos repositórios.
+Pronto! Agora o maven foi instalado na sua máquina e você pode prosseguir para a próxima aula do curso clicando [aqui]() ou navegando através do nosso repositório.
 
 ## Referências
 [Maven Installation](https://maven.apache.org/install.html)
