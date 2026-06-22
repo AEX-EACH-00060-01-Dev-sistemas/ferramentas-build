@@ -2,8 +2,6 @@
 
 # 1. Introdução
 
-Explicando mais sobre o maven e ensinando como instala-lo.
-
 ## Sobre o Maven
 
 O Maven, nomeado a partir de uma palavra na língua iídiche que significa "acumulador de conhecimento", é um projeto desenvolvido pela Apache Software Foundation e teve seu início em 2001 como parte do projeto Jakarta Alexandria e depois foi movido para o projeto [Apache Turbine](https://turbine.apache.org/). Naquela época cada projeto costumava possuir sua própria estrutura e mecanismos de compilação, algo que dificultava a manutenção, compartilhamento de código e a colaboração de desenvolvedores. O objetivo do Maven foi criar uma solução simples e padrão para o desenvolvimento de software.
@@ -19,9 +17,7 @@ Antes, além de não existir qualquer tipo de padrão para a estrutura de projet
 - Gerenciamento de bibliotecas e depêndencias externas;
 - Publicação de novas versões;
 
-Ademas, era necessário sempre garantir que os diversos ambientes de trabalho estivessem todos configurados de maneira constante, caso contrário poderiam ocorrer diversos problemas. Diversos programas possuíam diversos scripts e maneiras de executar esse processos, mas a falta de padrão dificultava a manutenção e aumentava a complexidade do projeto.
-
-O Maven chega como uma forma de resolver tudo isso: ele simplifica e padroniza a organização de projetos, a automatização de tarefas e o gerenciamento de dependências. Com ele o desenvolvedor consegue acelerar o processo de desenvolvimento e facilitar o desenvolvimento em vários ambientes.
+Ademas, era necessário sempre garantir que os diversos ambientes de trabalho estivessem todos configurados de maneira constante, caso contrário poderiam ocorrer diversos problemas. Nesse contexto, o Maven chega como uma forma de resolver tudo isso: ele simplifica e padroniza a organização de projetos, a automatização de tarefas e o gerenciamento de dependências. Com ele o desenvolvedor consegue acelerar o processo de desenvolvimento e facilitar o desenvolvimento em vários ambientes.
 
 ### Funcionamento
 Apesar de explicarmos melhor sobre o maven nos capítulos seguintes, vamos tentar entender: como o Maven faz tudo isso?
@@ -64,7 +60,7 @@ Os projetos Maven são configurados usando um Project Object Model (POM) que est
 
 Mais sobre tudo isso será explicado a frente, mas saiba que esse único arquivo que faz toda a "mágica" do Maven ser possível.
 
-### Próximos Passos
+## Próximos Passos
 
 O próximo capítulo explicará sobre como instalar e configurar o Maven em seu computador para os sistemas operacionais Windows, Linux e MacOS. Você pode encontra-lo dentro do repositório ou clicando [aqui](02-Como_Instalar_o_Maven.md).
 
