@@ -56,8 +56,8 @@ O Make possui "variáveis secretas" que mudam de valor dependendo da regra que e
 
 > Relembrando que a estrutura de toda regra é:
 >```makefile
-alvo: dependencias
-	comando
+> alvo: dependencias
+>	comando
 >```
 
 ### Passo 3: O Makefile Refatorado
