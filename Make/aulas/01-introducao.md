@@ -9,6 +9,11 @@ O **Make** é uma ferramenta clássica de automação de *build* criada nos anos
 
 ### O Problema que Resolvemos Aqui
 
+<figure align="center">
+  <img src="assets/01-fluxo-compilacao.jpg" alt="Descrição" width="600">
+  <figcaption><em>Figura 1: Fluxo de compilação em C. Fonte: https://embarcados.com.br/introducao-ao-makefile.</em></figcaption>
+</figure>
+
 Imagine um projeto com dezenas de arquivos `.c`. Compilar tudo manualmente — digitando `gcc arquivo1.c arquivo2.c arquivo3.c ... -o programa` — toda vez que você alterar uma linha de código traz três problemas:
 
 1. **Lentidão:** Comandos enormes para digitar repetidamente.
