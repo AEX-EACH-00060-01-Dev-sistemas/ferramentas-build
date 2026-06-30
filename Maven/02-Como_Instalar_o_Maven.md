@@ -35,9 +35,7 @@ Para testar se tudo foi instalado corretamente, abra o prompt de comando e digit
 
 ```bash
 mvn -v
-``` 
 ou 
-```bash
 mvn -version
 ```
 
@@ -78,10 +76,8 @@ sudo port install maven3
 Para testar se tudo foi instalado corretamente, abra o prompt de comando e digite:
 
 ```bash
-mvn -v
-``` 
+mvn -v 
 ou 
-```bash
 mvn -version
 ```
 
@@ -116,9 +112,7 @@ Para testar se tudo foi instalado corretamente, abra o prompt de comando e digit
 
 ```bash
 mvn -v
-``` 
 ou 
-```bash
 mvn -version
 ```
 
