@@ -4,7 +4,7 @@
 
 ## Sobre o Maven
 
-O Maven, nomeado a partir de uma palavra na língua iídiche que significa "acumulador de conhecimento", é um projeto desenvolvido pela Apache Software Foundation e teve seu início em 2001 como parte do projeto Jakarta Alexandria e depois foi movido para o projeto [Apache Turbine](https://turbine.apache.org/). Naquela época cada projeto costumava possuir sua própria estrutura e mecanismos de compilação, algo que dificultava a manutenção, compartilhamento de código e a colaboração de desenvolvedores. O objetivo do Maven foi criar uma solução simples e padrão para o desenvolvimento de software.
+O Maven, nomeado a partir de uma palavra na língua iídiche que significa "acumulador de conhecimento", é um projeto desenvolvido pela Apache Software Foundation, ele teve seu início em 2001 como parte do projeto Jakarta Alexandria e depois foi movido para o projeto [Apache Turbine](https://turbine.apache.org/). Naquela época cada projeto costumava possuir sua própria estrutura e mecanismos de compilação, algo que dificultava a manutenção, compartilhamento de código e a colaboração de desenvolvedores. O objetivo do Maven foi criar uma solução simples e padrão para o desenvolvimento de software.
 
 Também é possível conhecer mais sobre a história no Maven no próprio [site do projeto](https://maven.apache.org/background/history-of-maven.html).
 
@@ -58,12 +58,13 @@ Os projetos Maven são configurados usando um Project Object Model (POM) que est
 
 *Esse exemplo foi retirada [daqui](https://pt.wikipedia.org/wiki/Apache_Maven) no dia 21/06/2026.*
 
-Mais sobre tudo isso será explicado a frente, mas saiba que esse único arquivo que faz toda a "mágica" do Maven ser possível.
+Mais sobre tudo isso será explicado à frente, mas saiba que esse único arquivo que faz toda a "mágica" do Maven ser possível.
 
 ## Próximos Passos
 
-O próximo capítulo explicará sobre como instalar e configurar o Maven em seu computador para os sistemas operacionais Windows, Linux e MacOS. Você pode encontra-lo dentro do repositório ou clicando [aqui](02-Como_Instalar_o_Maven.md).
+O próximo capítulo explicará sobre como instalar e configurar o Maven em seu computador para os sistemas operacionais Windows, Linux e MacOS. Você pode encontrá-lo dentro do repositório ou clicando [aqui](02-Como_Instalar_o_Maven.md).
 
 ## Referências
 [History of Maven](https://maven.apache.org/background/history-of-maven.html)
+
 [What is Maven](https://maven.apache.org/what-is-maven.html)
