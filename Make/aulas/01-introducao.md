@@ -1,36 +1,38 @@
 # Aula 01: Introdução e o Primeiro Makefile
 
-> 🛑 **Pré-requisito Importante:** 
+> 🛑 **Pré-requisito Importante:**
+> Para aproveitar esta aula ao máximo, é fundamental entender modularização em C — o que são *headers* (`.h`) e arquivos objeto (`.o`). Se ainda não domina esses conceitos, leia primeiro a [Aula Extra: Modularização em C](../aulas-extras/01-modularizacao-em-c.md) antes de prosseguir.
 
-> Para aproveitar esta aula ao máximo, é fundamental que você entenda como funciona a modularização em C — ou seja, como trabalhar com múltiplos arquivos, o que são *headers* (`.h`) e o que são arquivos objeto (`.o`). Se você ainda não domina esses conceitos, não se preocupe! Preparamos uma aula extra sobre eles [Modularização-em-c](../aulas-extras/01-modularizacao-em-c.md). Recomendamos fortemente a leitura antes de prosseguir.
+## 1. Introdução
 
-## 1. Introdução Teórica
-
-O **Make** é uma ferramenta clássica de automação de *build* (construção) criada nos anos 70. Ele atua como um maestro: lê um arquivo de partitura chamado `Makefile` e executa os comandos necessários para compilar e montar o seu programa na ordem correta.
+O **Make** é uma ferramenta clássica de automação de *build* criada nos anos 70. Ele atua como um maestro: lê um arquivo de partitura chamado `Makefile` e executa os comandos necessários para compilar e montar o seu programa na ordem correta.
 
 ### O Problema que Resolvemos Aqui
 
-Imagine um projeto real com dezenas ou centenas de arquivos `.c`. Compilar tudo manualmente digitando `gcc arquivo1.c arquivo2.c arquivo3.c ... -o meu_programa` no terminal, toda vez que você alterar uma única linha de código, traz três problemas:
+<figure align="center">
+  <img src="assets/01-fluxo-compilacao.jpg" alt="Descrição" width="600">
+  <figcaption><em>Figura 1: Fluxo de compilação em C. Fonte: https://embarcados.com.br/introducao-ao-makefile.</em></figcaption>
+</figure>
 
-1. **Lentidão:** Você vai cansar de digitar comandos enormes.
-2. **Propensão a erros:** É muito fácil esquecer de incluir um arquivo novo ou atualizado.
-3. **Ineficiência extrema:** O compilador vai traduzir *todos* os arquivos novamente, mesmo aqueles em que você não tocou.
+Imagine um projeto com dezenas de arquivos `.c`. Compilar tudo manualmente — digitando `gcc arquivo1.c arquivo2.c arquivo3.c ... -o programa` — toda vez que você alterar uma linha de código traz três problemas:
 
-O Make resolve isso rastreando as **dependências**. Ele analisa o seu projeto e deduz: *"Opa, você só alterou o `arquivo2.c`. Vou recompilar apenas ele e juntar com o restante que já estava pronto"*. Em projetos grandes, isso economiza horas de processamento.
+1. **Lentidão:** Comandos enormes para digitar repetidamente.
+2. **Propensão a erros:** Fácil esquecer de incluir um arquivo novo ou atualizado.
+3. **Ineficiência:** O compilador retraduz *todos* os arquivos, mesmo os que você não tocou.
+
+O Make resolve isso rastreando **dependências**. Ele analisa o projeto e deduz: *"Você só alterou `mensagem.c`. Vou recompilar apenas ele e juntar com o restante que já estava pronto."* Em projetos grandes, isso economiza horas de processamento.
 
 ---
 
-## 2. Mão na Massa: Criando o seu primeiro Makefile
+## 2. Mão na Massa: Criando o Primeiro Makefile
 
-Para entendermos o Make na prática, precisamos de um pequeno projeto em C. Vamos construir um programa simples que exibe uma saudação.
+> 💡 **Dica:** Os arquivos desta aula estão prontos em `exemplos/aula-01/`. Consulte-os se quiser comparar com o seu trabalho.
 
-> 💡 **Dica de Ouro:** Todos os códigos que vamos criar neste passo a passo já estão prontos e disponíveis no nosso repositório. Você pode encontrá-los na pasta `exemplos/aula-01/`. Fique à vontade para consultá-los se quiser comparar com o seu trabalho!
+### Passo 1: Preparando o Código-Fonte
 
-### Passo 1: Preparando o código-fonte
+Crie uma pasta para o projeto e dentro dela crie os três arquivos abaixo:
 
-Crie uma pasta para o seu projeto, abra o terminal nela e crie os três arquivos abaixo:
-
-**`mensagem.h`** (Declaração da nossa função)
+**`mensagem.h`** — Declaração da função
 
 ```c
 #ifndef MENSAGEM_H
@@ -39,10 +41,9 @@ Crie uma pasta para o seu projeto, abra o terminal nela e crie os três arquivos
 void imprimir_saudacao();
 
 #endif
-
 ```
 
-**`mensagem.c`** (A implementação real)
+**`mensagem.c`** — Implementação
 
 ```c
 #include <stdio.h>
@@ -51,10 +52,9 @@ void imprimir_saudacao();
 void imprimir_saudacao() {
     printf("Olá! Seu Make está funcionando perfeitamente.\n");
 }
-
 ```
 
-**`main.c`** (O arquivo principal)
+**`main.c`** — Ponto de entrada
 
 ```c
 #include "mensagem.h"
@@ -63,86 +63,128 @@ int main() {
     imprimir_saudacao();
     return 0;
 }
-
 ```
 
-Para compilar isso manualmente, o comando seria: `gcc main.c mensagem.c -o programa`. Vamos automatizar esse processo.
+Para compilar isso manualmente, o comando seria:
+
+```
+gcc main.c mensagem.c -o programa
+```
+
+Vamos automatizar exatamente esse processo.
+
+---
 
 ### Passo 2: A Anatomia de uma Regra do Make
 
-O Make funciona com base em **regras**. A sintaxe fundamental de toda regra é:
+O Make funciona com base em **regras**. A sintaxe de toda regra é:
 
 ```makefile
 alvo: dependencias
 	comando
-
 ```
 
-* **Alvo (Target):** O nome do arquivo que queremos gerar (ou o nome de uma ação a ser executada).
-* **Dependências (Prerequisites):** Os arquivos estritamente necessários para construir o alvo.
-* **Comando (Recipe):** A instrução que o terminal deve executar para transformar as dependências no alvo.
+- **Alvo (Target):** O arquivo que queremos gerar, ou o nome de uma ação a executar.
+- **Dependências (Prerequisites):** Os arquivos necessários para construir o alvo.
+- **Comando (Recipe):** A instrução que o terminal executa para transformar as dependências no alvo.
 
-> ⚠️ **A REGRA DE OURO DO MAKE:** O espaço antes do `comando` **TEM QUE SER UM `TAB`**. Você não pode usar espaços comuns (barra de espaço). Se usar espaços, o Make vai falhar imediatamente com o erro `missing separator`.
+---
 
 ### Passo 3: Escrevendo o Makefile
 
-Na mesma pasta dos seus arquivos `.c`, crie um arquivo chamado exatamente **`Makefile`** (sem extensão e com "M" maiúsculo) e escreva as regras abaixo:
+> ⚠️ **A Regra de Ouro do Make:** O espaço antes de cada `comando` **obrigatoriamente deve ser um `TAB`** — não espaços comuns. Se usar espaços, o Make falhará imediatamente com o erro `missing separator`. Configure seu editor para não converter tabs em espaços em arquivos `Makefile`.
+
+Na mesma pasta dos arquivos `.c`, crie um arquivo chamado exatamente **`Makefile`** (sem extensão, com "M" maiúsculo) com o seguinte conteúdo:
 
 ```makefile
-# Nossa primeira regra gera o executável final chamado 'programa'
+# Regra principal: gera o executável 'programa'
 programa: main.o mensagem.o
 	gcc main.o mensagem.o -o programa
 
-# Regra para compilar apenas o main.c
+# Compila main.c em main.o
 main.o: main.c mensagem.h
 	gcc -c main.c
 
-# Regra para compilar apenas o mensagem.c
+# Compila mensagem.c em mensagem.o
 mensagem.o: mensagem.c mensagem.h
 	gcc -c mensagem.c
 
-# Uma regra especial (phony target) para limpar os arquivos gerados
+# Remove os arquivos gerados para forçar recompilação do zero
+# Nota: tornaremos o 'clean' mais robusto na Aula 02 com o .PHONY
 clean:
 	rm -f *.o programa
-
 ```
 
-*(Nota: Se você estiver no Windows usando o prompt padrão, o comando da regra `clean` seria `del /Q *.o programa.exe`), mas se estiver usando o ambiente MSYS2 configurado na Aula 00, mantenha o comando rm exatamente como está. O terminal MSYS2 fornece as ferramentas GNU normalmente.*.
+> **Usuários Windows (prompt padrão):** substitua o comando do `clean` por `del /Q *.o programa.exe`. Se estiver usando o MSYS2 configurado na Aula 00, mantenha o `rm` — o terminal MSYS2 fornece as ferramentas GNU normalmente.
+
+---
 
 ### Passo 4: Executando a Mágica
 
-1. No seu terminal, dentro da pasta do projeto, simplesmente digite:
-```bash
-make
+No terminal, dentro da pasta do projeto, execute:
 
 ```
+$ make
+gcc -c main.c
+gcc -c mensagem.c
+gcc main.o mensagem.o -o programa
+```
 
-2. O Make lerá a primeira regra (`programa`) e perceberá que precisa de `main.o` e `mensagem.o`. Ele irá procurar as regras para criá-los, executará os comandos na ordem exata e gerará o seu executável.
-3. Execute `./programa` (ou `.\programa.exe` no Windows) para ver a mensagem!
+O Make leu a primeira regra (`programa`), percebeu que precisava de `main.o` e `mensagem.o`, encontrou as regras para criá-los e executou os três comandos na ordem correta.
+
+Execute o programa:
+
+```
+$ ./programa
+Olá! Seu Make está funcionando perfeitamente.
+```
 
 **O Teste Definitivo da Eficiência:**
-Execute o comando `make` de novo, sem alterar nenhum arquivo. Ele responderá: `make: 'programa' is up to date.` O Make percebeu que nada mudou e não perdeu tempo recompilando o que já estava pronto.
+
+Execute `make` novamente, sem alterar nenhum arquivo:
+
+```
+$ make
+make: 'programa' is up to date.
+```
+
+Nenhum comando foi executado. O Make comparou os timestamps dos arquivos, percebeu que nada mudou e não perdeu tempo recompilando o que já estava pronto. Esse é o comportamento central que torna o Make indispensável em projetos grandes.
+
+**Alterando apenas um arquivo:**
+
+Abra `mensagem.c`, faça qualquer alteração (como mudar o texto da mensagem) e execute `make`:
+
+```
+$ make
+gcc -c mensagem.c
+gcc main.o mensagem.o -o programa
+```
+
+Só `mensagem.c` foi recompilado. O `main.o` já estava atualizado e foi reaproveitado.
 
 ---
 
 ## 3. Resumo / Cheat Sheet
 
-* **A estrutura básica:**
+**Estrutura de uma regra:**
+
 ```makefile
 alvo: dependencia1 dependencia2
-[TAB]comando_a_ser_executado
-
+[TAB]comando
 ```
 
-* **O Tab Obrigatório:** O Make exige estritamente o caractere `Tab` antes de qualquer comando da regra.
-* **Execução:** Digitar apenas `make` no terminal executa o **primeiro alvo** que aparecer no seu arquivo `Makefile`.
-* **A flag `-c` do GCC:** Instrui o compilador a gerar apenas o arquivo objeto (`.o`), sem tentar criar o executável final. Essencial para compilação modular.
-* **Limpeza (`clean`):** É uma boa prática ter um alvo `clean` para apagar os arquivos compilados (`.o` e executáveis), forçando o Make a reconstruir tudo do zero quando necessário. Basta digitar `make clean`.
+| Conceito | Detalhe |
+| --- | --- |
+| **Tab obrigatório** | O Make exige `Tab` antes de cada comando. Espaços causam `missing separator`. |
+| **Primeiro alvo** | Digitar `make` sozinho executa o **primeiro alvo** do arquivo. |
+| **Flag `-c` do GCC** | `gcc -c arquivo.c` gera `arquivo.o` sem linkar. Essencial para compilação modular. |
+| **`make clean`** | Apaga os arquivos compilados, forçando reconstrução completa do zero. |
+| **Rastreamento de mudanças** | O Make compara timestamps: só recompila o que foi modificado desde a última build. |
 
 ---
 
 ## 4. O que veremos na próxima aula?
 
-Se você observar o nosso `Makefile`, vai notar que repetimos palavras várias vezes — como os nomes dos arquivos `.o` e a chamada ao compilador `gcc`. Em projetos reais que crescem rápido, essa repetição vira uma dor de cabeça para manter.
+Se você observar o `Makefile` que escrevemos, vai notar que repetimos palavras várias vezes — o nome `gcc`, os arquivos `.o`, e assim por diante. Em projetos que crescem rápido, essa repetição vira um problema de manutenção.
 
-Na **Aula 02**, vamos resolver isso aprendendo sobre **Variáveis e Macros** no Make, deixando o nosso script de build muito mais limpo, dinâmico e com cara de código profissional!
+Na **Aula 02**, vamos resolver isso com **Variáveis e Macros** no Make, deixando o script de build muito mais limpo e com cara de código profissional.

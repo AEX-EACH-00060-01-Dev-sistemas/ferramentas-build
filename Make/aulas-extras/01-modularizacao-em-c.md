@@ -1,47 +1,48 @@
 # Aula Extra: Modularização em C (Entendendo arquivos .h e .o)
 
-## 1. Introdução Teórica
+## 1. Introdução
 
-Quando começamos a programar, é muito comum colocar todo o nosso código dentro de um único arquivo (geralmente chamado `main.c`). Para projetos pequenos, isso funciona perfeitamente. Mas o que acontece quando o seu projeto cresce e passa a ter milhares de linhas?
+Quando começamos a programar, é natural colocar todo o código dentro de um único arquivo (`main.c`). Para projetos pequenos, isso funciona bem. Mas o que acontece quando o projeto cresce e passa a ter milhares de linhas?
 
-O arquivo vira um pesadelo para ler, entender e dar manutenção. A solução para isso é a **Modularização**: o ato de dividir o seu programa em partes menores (módulos), onde cada arquivo é responsável por uma tarefa específica.
+O arquivo vira um pesadelo para ler, entender e dar manutenção. A solução é a **Modularização**: dividir o programa em partes menores, onde cada arquivo é responsável por uma tarefa específica.
 
-Para o computador juntar todas essas partes depois, o processo de compilação é dividido em duas grandes etapas, e é aqui que entram os diferentes tipos de arquivos:
+Para o computador juntar todas essas partes, a compilação é dividida em etapas — e é aqui que entram os diferentes tipos de arquivo:
 
-* **Arquivos `.c` (Source / Fonte):** Onde fica a lógica real do seu programa. É onde as funções são escritas de fato (o "como fazer").
-* **Arquivos `.h` (Headers / Cabeçalhos):** Funcionam como um "cardápio" ou "índice". Eles não contêm a lógica, apenas as **declarações** (assinaturas) das funções. Eles avisam ao resto do programa: *"Ei, essa função existe em algum lugar, pode confiar e usar"*.
-* **Arquivos `.o` (Objects / Objetos):** Quando você compila um arquivo `.c` individualmente, o compilador o transforma em um arquivo `.o`. Ele contém código de máquina (binário), mas **ainda não é um executável**. Ele é como uma peça de quebra-cabeça solta; precisa ser conectada (linkada) com as outras peças (outros arquivos `.o`) para formar o programa final.
+| Tipo | Papel no projeto |
+| --- | --- |
+| `.c` (Source) | Contém a lógica real. É onde as funções são **implementadas** (o "como fazer"). |
+| `.h` (Header) | Funciona como um "cardápio". Contém apenas as **declarações** das funções, avisando ao resto do programa: *"essa função existe em algum lugar, pode usá-la."* |
+| `.o` (Object) | Resultado da compilação de um único `.c`. Contém código de máquina, mas **ainda não é um executável** — é uma peça de quebra-cabeça que precisa ser conectada (linkada) às outras. |
 
-### O Problema que Resolvemos Aqui
+### Por que isso importa para o Make?
 
-Entender essa separação é o primeiro passo para dominar ferramentas de automação de build. O Make brilha justamente porque ele observa esses arquivos `.o`. Se você tem 50 arquivos `.c` e modifica apenas um, não faz sentido traduzir os outros 49 novamente. Basta gerar o `.o` daquele que mudou e costurar tudo de novo!
+O Make brilha justamente por observar esses arquivos `.o`. Se você tem 50 arquivos `.c` e modifica apenas um, não faz sentido recompilar os outros 49. O Make detecta o que mudou, gera apenas o `.o` daquele arquivo e costura tudo de novo — economizando tempo de compilação em projetos grandes.
 
 ---
 
 ## 2. Mão na Massa: Compilando em Partes
 
-Vamos criar uma mini-calculadora dividida em múltiplos arquivos para entender o fluxo do compilador.
+Vamos criar uma mini-calculadora dividida em múltiplos arquivos para entender o fluxo completo do compilador.
 
-### Passo 1: Criando os arquivos
+### Passo 1: Criando os Arquivos
 
-Abra seu terminal, crie uma pasta para este teste e crie os seguintes arquivos:
+Crie uma pasta para este exercício e dentro dela crie os três arquivos abaixo:
 
-**`matematica.h`** (O nosso cardápio)
+**`matematica.h`** — O cardápio
 
 ```c
-// As três linhas abaixo são chamadas de "Include Guards".
-// Elas impedem que este arquivo seja incluído mais de uma vez por engano.
+// Include Guards: impedem que este arquivo seja incluído mais de uma vez.
+// Sem eles, o compilador reclamaria de definições duplicadas.
 #ifndef MATEMATICA_H
 #define MATEMATICA_H
 
-// Apenas avisamos que a função existe. Não dizemos como ela funciona.
+// Apenas declaramos que a função existe. Não dizemos como ela funciona.
 int somar(int a, int b);
 
 #endif
-
 ```
 
-**`matematica.c`** (A implementação da lógica)
+**`matematica.c`** — A implementação
 
 ```c
 #include "matematica.h"
@@ -49,61 +50,69 @@ int somar(int a, int b);
 int somar(int a, int b) {
     return a + b;
 }
-
 ```
 
-**`main.c`** (Onde o programa começa)
+**`main.c`** — O ponto de entrada do programa
 
 ```c
 #include <stdio.h>
-#include "matematica.h" // Incluímos o header para o main.c saber que "somar" existe
+#include "matematica.h" // Informa ao main.c que a função "somar" existe
 
 int main() {
     int resultado = somar(5, 3);
     printf("O resultado da soma é: %d\n", resultado);
     return 0;
 }
-
 ```
 
-### Passo 2: A Compilação Manual (Gerando os .o)
+---
 
-Se você tentar rodar `gcc main.c -o programa`, vai dar erro! O `main.c` sabe que a função `somar` existe (por causa do `.h`), mas o código dela não está lá. Precisamos compilar em etapas.
+### Passo 2: Compilação — Gerando os Arquivos `.o`
 
-No terminal, execute:
-
-```bash
-gcc -c matematica.c
+Antes de tentar compilar tudo de uma vez, experimente:
 
 ```
-
-*A flag `-c` significa "Compile, mas não junte tudo (não linke)".*
-Se você olhar na pasta agora, verá um novo arquivo chamado **`matematica.o`**.
-
-Faça o mesmo para o main:
-
-```bash
-gcc -c main.c
-
+$ gcc main.c -o programa
+/usr/bin/ld: /tmp/ccXXXXXX.o: undefined reference to 'somar'
+collect2: error: ld returned 1 exit status
 ```
 
-Agora você tem o **`main.o`**.
+O `main.c` sabe que `somar` existe (graças ao `.h`), mas o código dela não está lá. O linker não consegue encontrá-la e falha. Precisamos compilar em etapas.
 
-### Passo 3: A Linkagem (Juntando as peças)
+Compile cada arquivo individualmente com a flag `-c` ("compile, mas não linke"):
 
-Agora temos duas peças de quebra-cabeça prontas em código de máquina. Vamos pedir para o GCC (que neste momento atua como *Linker*) juntar as duas e criar o executável final:
+```
+$ gcc -c matematica.c
+$ gcc -c main.c
+```
 
-```bash
-gcc main.o matematica.o -o calculadora
+Após esses dois comandos, liste os arquivos da pasta:
 
+```
+$ ls
+main.c  main.o  matematica.c  matematica.h  matematica.o
+```
+
+Dois novos arquivos `.o` foram criados — as peças do quebra-cabeça em código de máquina.
+
+---
+
+### Passo 3: Linkagem — Juntando as Peças
+
+Agora pedimos ao GCC (agora atuando como *linker*) que junte os `.o` e gere o executável final:
+
+```
+$ gcc main.o matematica.o -o calculadora
 ```
 
 Execute o programa:
 
-* **Linux/Mac:** `./calculadora`
-* **Windows:** `.\calculadora.exe`
+```
+$ ./calculadora
+O resultado da soma é: 8
+```
 
-A mensagem "O resultado da soma é: 8" aparecerá na tela. Você acabou de fazer manualmente exatamente o trabalho que ensinaremos o Make a fazer por você na Aula 01!
+Você acaba de fazer **manualmente** exatamente o trabalho que ensinaremos o Make a automatizar na Aula 01.
 
 ---
 
@@ -111,14 +120,17 @@ A mensagem "O resultado da soma é: 8" aparecerá na tela. Você acabou de fazer
 
 | Tipo de Arquivo | Função no Projeto |
 | --- | --- |
-| **`.c`** | Contém o código-fonte real (a implementação das funções e lógica). |
-| **`.h`** | Contém declarações de funções e estruturas. É usado com `#include`. |
-| **`.o`** | Código objeto binário. O resultado da compilação de um único `.c`. |
+| `.c` | Código-fonte. Contém a implementação real das funções. |
+| `.h` | Cabeçalho. Contém declarações; usado com `#include`. |
+| `.o` | Código objeto. Resultado da compilação de um único `.c`; ainda não é executável. |
 
-* **Include Local vs. Sistema:**
-* `#include <stdio.h>` (Com sinais de menor/maior): O compilador procura na pasta de bibliotecas padrão do sistema operacional.
-* `#include "matematica.h"` (Com aspas): O compilador procura na mesma pasta do seu projeto.
+**Include local vs. sistema:**
 
+```c
+#include <stdio.h>     // Busca na pasta de bibliotecas padrão do sistema
+#include "matematica.h" // Busca na pasta do projeto
+```
 
-* **A Mágica da flag `-c`:** O comando `gcc -c arquivo.c` cria o `arquivo.o`. Ele para o processo antes da etapa de linkagem, sendo fundamental para o funcionamento eficiente do Make.
-* **Include Guards:** Sempre envolva o conteúdo dos seus arquivos `.h` com `#ifndef`, `#define` e `#endif`. Isso evita conflitos de redefinição caso vários arquivos `.c` tentem incluir o mesmo cabeçalho.
+**A flag `-c`:** `gcc -c arquivo.c` cria `arquivo.o` sem linkar. Fundamental para compilação modular e para o funcionamento eficiente do Make.
+
+**Include Guards:** sempre envolva o conteúdo dos seus `.h` com `#ifndef`, `#define` e `#endif`. Isso evita erros de redefinição quando vários `.c` incluem o mesmo cabeçalho.

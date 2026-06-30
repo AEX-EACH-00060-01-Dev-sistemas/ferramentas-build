@@ -17,8 +17,8 @@ Realizar todas essas tarefas de maneira manual torna o processo de desenvolvimen
 
 Entre os conteúdos abordados nesse repositório estão:
 
-- [Maven (Java)]();
-- [Makefile (C/C++)](./Maven/);
+- [Maven (Java)](Maven/);
+- [Make (C)](Make/);
 - ...
 
 ## Youtube
