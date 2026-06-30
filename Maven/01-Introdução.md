@@ -22,7 +22,7 @@ Ademas, era necessário sempre garantir que os diversos ambientes de trabalho es
 ### Funcionamento
 Apesar de explicarmos melhor sobre o maven nos capítulos seguintes, vamos tentar entender: como o Maven faz tudo isso?
 
-Os projetos Maven são configurados usando um Project Object Model (POM) que está descrito em um arquivo nomeado `pom.xml`. Nele, são descritos diversas informações sobre o projeto, como seu nome, versão, depêndencias, entre outros. Com ele, o Maven consegue entender tudo sobre seu projeto e executa-lo de maneira adequada. Abaixo segue um exemplo mínimo de um `pom.xml`:
+Os projetos Maven são configurados usando um Project Object Model (POM) que está descrito em um arquivo nomeado `pom.xml`. Nele, são descritas diversas informações sobre o projeto, como seu nome, versão, depêndencias, entre outros. Com ele, o Maven consegue entender tudo sobre seu projeto e executa-lo de maneira adequada. Abaixo segue um exemplo mínimo de um `pom.xml`:
 
 ```XML
 <project>
