@@ -19,15 +19,6 @@ Entre os conteúdos abordados nesse repositório estão:
 
 - [Maven (Java)](Maven/);
 - [Make (C)](Make/);
-- ...
-
-## Youtube
-
-Para fins didáticos, também estão disponibilizadas vídeo aulas sobre os assuntos desse repositório em nosso canal do [youtube]().
-
-## Estrutura do Repositório
-
-\[A ser preenchido]
 
 ## Público Alvo
 
@@ -43,8 +34,8 @@ Este material foi desenvolvido para:
 
 A depender do conteúdo estudado, é recomendado que já exista familiaridade com:
 
-- [Java](https://github.com/AEX-EACH-00060-01-Dev-sistemas/linguagem-de-programacao);
-- [C/C++](https://github.com/AEX-EACH-00060-01-Dev-sistemas/linguagem-de-programacao);
+- Java;
+- C/C++;
 - Alguma [IDE]();
 
 Caso não se sinta confiante em algo e/ou gostaria de revisar algum conteúdo, basta clicar em algum dos hiperlinks acima que será direcionado a outra página produzida pela atividade extensionista. Caso você tenha interesse em algum outro assunto não listado acima, verifique a página da atividade extensionista no github clicando [aqui](https://github.com/AEX-EACH-00060-01-Dev-sistemas).
